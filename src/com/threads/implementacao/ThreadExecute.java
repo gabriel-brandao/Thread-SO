@@ -10,8 +10,9 @@ public class ThreadExecute {
     public static int numeroDeThreads = 0;
     public static ArrayList<ArrayList<Integer>> matrizDeNumeros;
 
-    private static final int rangeNumerosAleatorios = 11;
+    private static final int rangeNumerosAleatorios = 11; //0 - 10
     private static final Scanner in = new Scanner(System.in);
+    private static int somaNumeroDePrimos = 0;
 
     public static void menu() {
         int opcao = 0;
@@ -47,15 +48,23 @@ public class ThreadExecute {
                     break;
 
                 case 5:
-
+                    numerosPrimosETempo();
                     break;
 
                 case 6:
                     break;
 
+                default:
+                    System.out.println("Opção inválida");
+                    break;
+
             }
         }
 
+    }
+
+    public static void numerosPrimosETempo(){
+        System.out.println("A matriz possui = " + ThreadRunnable.getQuantidadeDePrimos());
     }
 
     public static void definirTamanhoDaMatriz() {
@@ -64,7 +73,7 @@ public class ThreadExecute {
     }
 
     public static void preencherMatriz() {
-        Random numero = new Random(2);
+        Random numero = new Random(2); //inicia semente para sempre gerar a mesma matriz
         ArrayList<Integer> linha;
 
         if (TAM != 0) {
@@ -123,19 +132,9 @@ public class ThreadExecute {
     }
 
     public static void main(String[] args) {
-        /*
-         * ThreadRunnable thread1 = new ThreadRunnable("#0", 500);
-         * ThreadRunnable thread2 = new ThreadRunnable("#1", 500);
-         * ThreadRunnable thread3 = new ThreadRunnable("#2", 500);
-         * ThreadRunnable thread4 = new ThreadRunnable("#3", 500);
-         */
+
         System.out.println(Thread.currentThread().getName());
-
-        int a = 3 / 2;
-        System.out.println(a);
-
         menu();
-
     }
 
 }

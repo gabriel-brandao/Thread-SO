@@ -1,8 +1,11 @@
 package com.threads.implementacao;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class ThreadRunnable implements Runnable {
 
-    private static int somaNumeroDePrimos = 0;
+    public static int somaNumeroDePrimos = 0;
     private int iInicial, jInicial, iFinal, jFinal;
 
     public ThreadRunnable(int iInicial, int jInicial, int iFinal, int jFinal) {
@@ -17,45 +20,25 @@ public class ThreadRunnable implements Runnable {
 
     @Override
     public void run() {
-        int flag = -1;
+        int i = iInicial, j = jInicial;
+      
+        while(i != iFinal || j != jFinal+1){
 
-        System.out.println("Intervalos [" + iInicial + "][" + jInicial + "] [" + iFinal + "][" + jFinal + "]");
-        for (int i = iInicial; i < ThreadExecute.TAM; i++) {
-            for (int j = jInicial; j < ThreadExecute.TAM;) {
-
-                System.out.println("[" + i + "]" + "[" + j + "] = " + ThreadExecute.matrizDeNumeros.get(i).get(j));
-
-                if (isPrimo(ThreadExecute.matrizDeNumeros.get(i).get(j)))
-                    synchronized (ThreadRunnable.class) {
-                        somaNumeroDePrimos++;
-                        // System.out.println(
-                        // Thread.currentThread().getName() + "[" + i + "]" + "[" + j + "] = "
-                        // + ThreadExecute.matrizDeNumeros.get(i).get(j) + " - " + somaNumeroDePrimos);
-                    }
-
-                if (i == iFinal && j == jFinal) {
-                    flag = 0;
-                    break;
-                }
-
-                j++;
-                j %= ThreadExecute.TAM;
+            if(j == ThreadExecute.TAM){
+                j = 0;
+                i ++;
             }
-            if (flag == 0)
-                break;
-        }
+/*
+            System.out.println("[" + i + "]" + "[" + j + "] = " + ThreadExecute.matrizDeNumeros.get(i).get(j));
+*/
+            //synchronized(ThreadRunnable.class){
+                if (isPrimo(ThreadExecute.matrizDeNumeros.get(i).get(j)))
+                    somaNumeroDePrimos++;
+            //}
 
-        /*
-         * int i = 0;
-         * synchronized (ThreadRunnable.class) { // faz a sincronização da variavel
-         * static da classe
-         * somaNumeroDePrimos++;
-         * System.out.println(Thread.currentThread().getName() + ":" + "[" + iInicial +
-         * "]" + "[" + jInicial + "] : "
-         * + "[" + iFinal + "]" + "[" + jFinal + "]" + somaNumeroDePrimos);
-         * }
-         */
+            j ++;
 
+        } 
     }
 
     public boolean isPrimo(int numero) {
@@ -69,5 +52,9 @@ public class ThreadRunnable implements Runnable {
                               // número, entao nao é primo
 
         return true;
+    }
+
+    public static int getQuantidadeDePrimos(){
+        return somaNumeroDePrimos;
     }
 }
