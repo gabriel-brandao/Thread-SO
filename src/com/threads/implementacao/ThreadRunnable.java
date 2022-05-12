@@ -3,8 +3,6 @@ package com.threads.implementacao;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ThreadRunnable implements Runnable {
 
@@ -14,56 +12,56 @@ public class ThreadRunnable implements Runnable {
     private static final Semaphore SEMAFORO = new Semaphore(1);
     private static Lock lock = new ReentrantLock();
 
+    // contrutor para o modo do Threads
     public ThreadRunnable(int iInicial, int jInicial, int iFinal, int jFinal) {
         this.iInicial = iInicial;
         this.jInicial = jInicial;
         this.iFinal = iFinal;
         this.jFinal = jFinal;
-
-        Thread t = new Thread(this); // mesmo que Thread t = new Thread(new ThreadRunnable ()); fora dessa classe
-        t.start();
     }
 
+    // construtor para o modo serial
     public ThreadRunnable(int iFinal, int jFinal) {
         this.iInicial = 0;
         this.jInicial = 0;
         this.iFinal = iFinal;
         this.jFinal = jFinal;
 
-        modoSerial(iFinal, jFinal);
+        modoSerial();
     }
 
     @Override
+    // execução no modo Thread
     public void run() {
-        lock.lock();
         int i = iInicial, j = jInicial;
-        while (i != iFinal || j != jFinal + 1) {
+        int somaNumeroDePrimosLocal = 0;
 
+        while (i != iFinal || j != jFinal + 1) {
             if (j == ThreadExecute.TAM) {
                 j = 0;
                 i++;
             }
 
-            // System.out.println(Thread.currentThread().getName() + "[" + i + "]" + "[" + j
-            // + "] = "
-            // + ThreadExecute.matrizDeNumeros.get(i).get(j) + " - " + somaNumeroDePrimos);
             if (isPrimo(ThreadExecute.matrizDeNumeros.get(i).get(j)))
-                somaNumeroDePrimos++;
+                somaNumeroDePrimosLocal++;
 
             j++;
         }
+
+        lock.lock();
+        somaNumeroDePrimos += somaNumeroDePrimosLocal;
         lock.unlock();
     }
 
-    public void modoSerial(int iFinal, int jFinal) {
-        for (int i = 0; i < iFinal; i++)
-            for (int j = 0; j < jFinal; j++)
+    // execução no modo serial
+    public void modoSerial() {
+        for (int i = iInicial; i < iFinal; i++)
+            for (int j = jInicial; j < jFinal; j++)
                 if (isPrimo(ThreadExecute.matrizDeNumeros.get(i).get(j)))
                     somaNumeroDePrimos++;
     }
 
     public boolean isPrimo(int numero) {
-
         if (numero <= 1)
             return false;
 
@@ -71,7 +69,6 @@ public class ThreadRunnable implements Runnable {
             if (numero % divisor == 0)
                 return false; // se achar algum divisor menor ou igual do que a raiz quadrada do proprio
                               // número, entao nao é primo
-
         return true;
     }
 

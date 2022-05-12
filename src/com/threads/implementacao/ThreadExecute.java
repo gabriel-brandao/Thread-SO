@@ -1,5 +1,7 @@
 package com.threads.implementacao;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -9,11 +11,10 @@ public class ThreadExecute {
     public static int TAM = 0;
     public static int numeroDeThreads = 0;
     public static ArrayList<ArrayList<Integer>> matrizDeNumeros;
+    public static ArrayList<Thread> listaDeThreads;
 
     private static final int rangeNumerosAleatorios = 11; // 0 - 10
     private static final Scanner in = new Scanner(System.in);
-    private static int somaNumeroDePrimos = 0;
-
     private static long start, now;
 
     public static void menu() {
@@ -91,18 +92,15 @@ public class ThreadExecute {
         Random numero = new Random(2); // inicia semente para sempre gerar a mesma matriz
         ArrayList<Integer> linha;
 
-        if (TAM != 0) {
-            matrizDeNumeros = new ArrayList<ArrayList<Integer>>(TAM);
-            for (int i = 0; i < TAM; i++) {
-                linha = new ArrayList<Integer>(); // // linha.clear(); limpa linha
+        matrizDeNumeros = new ArrayList<ArrayList<Integer>>(TAM);
+        for (int i = 0; i < TAM; i++) {
+            linha = new ArrayList<Integer>();
 
-                for (int j = 0; j < TAM; j++)
-                    linha.add(numero.nextInt(rangeNumerosAleatorios));
+            for (int j = 0; j < TAM; j++)
+                linha.add(numero.nextInt(rangeNumerosAleatorios));
 
-                matrizDeNumeros.add(linha);
-            }
-        } else
-            System.out.println("Tamanho da matriz não definida");
+            matrizDeNumeros.add(linha); // adiciona uma linha a cada posição, formando uma matriz
+        }
     }
 
     public static void definirNumeroDeThreads() {
@@ -113,47 +111,48 @@ public class ThreadExecute {
     public static void criarThreads() {
         float iInicial, jInicial, iFinal, jFinal, indice;
         float numerosPorThreads;
+        start = 0;
 
-        start = System.currentTimeMillis();
+        listaDeThreads = new ArrayList<Thread>();
+        numerosPorThreads = (TAM * TAM) / numeroDeThreads;
 
-        if (numeroDeThreads != 0 && matrizDeNumeros.size() != 0) {
-            numerosPorThreads = (TAM * TAM) / numeroDeThreads;
+        ThreadRunnable.setQuantidadeDePrimos(0);// reinicia quantidade de numeros primos
 
-            ThreadRunnable.setQuantidadeDePrimos(0);
+        for (int n = 0; n < numeroDeThreads; n++) {
 
-            for (int n = 0; n < numeroDeThreads; n++) {
-                // converte um dos termos para float pois divisão entre inteiros sempre retorna
-                // inteiro
-                iInicial = (n * numerosPorThreads) / TAM;
-                jInicial = (n * numerosPorThreads) % TAM;
+            iInicial = (n * numerosPorThreads) / TAM;
+            jInicial = (n * numerosPorThreads) % TAM;
 
-                indice = ((n + 1) * numerosPorThreads) / TAM;
-                iFinal = ((indice * 10) % 10) == 0 ? (int) indice - 1 : (int) indice;
+            indice = ((n + 1) * numerosPorThreads) / TAM;
+            iFinal = ((indice * 10) % 10) == 0 ? (int) indice - 1 : (int) indice;
 
-                indice = ((n + 1) * numerosPorThreads) % TAM;
-                jFinal = indice == 0 ? TAM - 1 : (int) indice - 1;
-                // converte para indices inteiros
-                ThreadRunnable thread = new ThreadRunnable((int) iInicial, (int) jInicial, (int) iFinal, (int) jFinal);
+            indice = ((n + 1) * numerosPorThreads) % TAM;
+            jFinal = indice == 0 ? TAM - 1 : (int) indice - 1;
+
+            ThreadRunnable runnable = new ThreadRunnable((int) iInicial, (int) jInicial, (int) iFinal, (int) jFinal);
+            Thread thread = new Thread(runnable); // mesmo que Thread t = new Thread(new ThreadRunnable ()); fora dessa
+                                                  // classe
+            thread.start();
+
+            listaDeThreads.add(thread); // guarda threads em um arrayList
+
+            if (start == 0)// a partir da criação da primeira Thread começa a contar o tempo
+                start = System.currentTimeMillis();
+        }
+        // aguarda TODAS as threads morrerem (serem finalizadas) para só então contar o
+        // tempo final
+        for (int i = 0; i < numeroDeThreads; i++) {
+            while (listaDeThreads.get(i).isAlive()) {
             }
-
-        } else
-            System.out.println("Numero de Threads não definida ou matriz não preenchida");
-
+        }
         now = System.currentTimeMillis();
     }
 
     public static void modoSerial() {
+        ThreadRunnable.setQuantidadeDePrimos(0); //// reinicia quantidade de numeros primos
+
         start = System.currentTimeMillis();
-
-        ThreadRunnable serial = null;
-
-        ThreadRunnable.setQuantidadeDePrimos(0);
-
-        if (matrizDeNumeros.size() != 0)
-            serial = new ThreadRunnable(TAM, TAM);
-        else
-            System.out.println("matriz não preenchida");
-
+        ThreadRunnable serial = new ThreadRunnable(TAM, TAM);
         now = System.currentTimeMillis();
     }
 
