@@ -2,6 +2,12 @@
 
 Se trata de um programa que usará a programação MultiThreading para dividir uma matriz de números inteiros aleatórios e contar quantos números primos existem nela
 
+# Linux:
+.
+.
+.
+
+
 # Windows:
 
 ### 1. Verificando a Instalação do Java
@@ -33,7 +39,7 @@ siga para o **Passo 2.1** para configurar a variável de ambiente.
 
 
 ### &emsp; &emsp; 2.1 Configurando a variável de Ambiente
-&emsp; &emsp;<span style="color:red"> - ***OBS: Para configurar a variável de ambiente é preciso abrir o CMD como Administrador.*** </span>
+> :warning: ***OBS: Para configurar a variável de ambiente é preciso abrir o CMD como ADMINISTRADOR.***
 
 &emsp; &emsp; Após executar o CMD como Administrador execute o seguinte comando, para mostrar ao prompt de comando o caminho padrão onde o 
 &emsp; &emsp; Java foi instalado:
