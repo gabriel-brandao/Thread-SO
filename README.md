@@ -3,9 +3,61 @@
 Se trata de um programa que usará a programação MultiThreading para dividir uma matriz de números inteiros aleatórios e contar quantos números primos existem nela
 
 # Linux:
-.
-.
-.
+
+### 1. Instalação do Java
+
+#### &emsp; &emsp; 1.1 Via .tar.gz
+&emsp; &emsp; Faça o Download do Java JDK compactado em .tar.gz, em seguida crie o diretório jvm em ```/usr/lib/```:
+
+&emsp; &emsp; ```sudo mkdir /usr/lib/jvm```
+
+&emsp; &emsp; Em seguida descompacte o JDK no diretório criado acima:
+
+&emsp; &emsp; ```sudo tar zxvf jdk-18_linux-x64_bin.tar.gz -C /usr/lib/jvm```
+
+&emsp; &emsp; Renomeie a pasta movida para dentro do diretório ```/usr/lib/jvm``` como "jdk". Se ao executar o comando abaixo ocorrer um erro com a
+&emsp; &emsp; mensagem iniciando com “mv: é impossível sobrescrever o não-diretório”, pule este passo:
+
+&emsp; &emsp; ```sudo mv /usr/lib/jvm/jdk* /usr/lib/jvm/jdk```
+
+&emsp; &emsp; Crie um link simbólico para a pasta criada:
+
+&emsp; &emsp; ```sudo ln -s /usr/lib/jvm/jdk /usr/lib/jvm/java-oracle```
+
+&emsp; &emsp; Concluido os passos acima, vamos configurar a variável de ambiente no **Passo 2.**
+
+### 2. Verificando variável de ambiente Java:
+Para verificar se a variável de ambiente Java está configurada corretamente, execute o seguinte comando no CMD:
+
+```echo %JAVA_HOME%```
+
+caso a saída seja parecida com a imagem abaixo a variável está configurada corretamente e podemos passar para o **Passo 3**:
+
+
+
+caso a saída for parecida com:
+
+![image](https://user-images.githubusercontent.com/71159051/180892202-3d35f94f-fc35-41dc-ab72-00106a6cfc61.png)
+
+siga para o **Passo 2.1** para configurar a variável de ambiente.
+
+caso a saída seja parecida com a imagem abaixo, a variável foi configurada corretamente e podemos avançar para o **Passo 3**: 
+
+![3](https://user-images.githubusercontent.com/71159051/180118770-35762cde-c146-4d20-974f-f7190e93d6b8.png)
+
+
+### &emsp; &emsp; 2.1 Configurando a variável de Ambiente
+
+&emsp; &emsp; Crie uma cópia do arquivo ```/etc/profile```:
+
+&emsp; &emsp; ```sudo cp -a /etc/profile /etc/profile.original```
+
+&emsp; &emsp; Abra o arquivo com seu editor de texto:
+
+&emsp; &emsp; ```sudo gedit /etc/profile```
+
+
+
 
 
 # Windows:
@@ -19,7 +71,7 @@ caso a saída seja parecida com a imagem abaixo o Java está instalado e podemos
 
 ![java -version](https://user-images.githubusercontent.com/71159051/180118070-27e424cf-292b-4d00-a373-2ec1a8e271a6.png)
 
-***caso contrário faça a instalação do Java no diretório padrão sugerido na instalação.***
+> :floppy_disk: **caso contrário faça a instalação do Java no diretório padrão sugerido na instalação, e execute o ***Passo 1*** novamente !**
 
 
 ### 2. Verificando variável de ambiente Java:
@@ -39,7 +91,7 @@ siga para o **Passo 2.1** para configurar a variável de ambiente.
 
 
 ### &emsp; &emsp; 2.1 Configurando a variável de Ambiente
-> :warning: ***OBS: Para configurar a variável de ambiente é preciso abrir o CMD como ADMINISTRADOR.***
+>&emsp; &emsp;:warning: ***OBS: Para configurar a variável de ambiente é preciso abrir o CMD como ADMINISTRADOR !!!***
 
 &emsp; &emsp; Após executar o CMD como Administrador execute o seguinte comando, para mostrar ao prompt de comando o caminho padrão onde o 
 &emsp; &emsp; Java foi instalado:
