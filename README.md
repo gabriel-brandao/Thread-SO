@@ -16,7 +16,7 @@ Se trata de um programa que usará a programação MultiThreading para dividir u
 &emsp; &emsp; ```sudo tar zxvf jdk-18_linux-x64_bin.tar.gz -C /usr/lib/jvm```
 
 &emsp; &emsp; Renomeie a pasta movida para dentro do diretório ```/usr/lib/jvm``` como "jdk". Se ao executar o comando abaixo ocorrer um erro com a
-&emsp; &emsp; mensagem iniciando com “mv: é impossível sobrescrever o não-diretório”, pule este passo:
+&emsp; &emsp; mensagem iniciando com _“mv: é impossível sobrescrever o não-diretório”_, pule este passo:
 
 &emsp; &emsp; ```sudo mv /usr/lib/jvm/jdk* /usr/lib/jvm/jdk```
 
@@ -27,34 +27,55 @@ Se trata de um programa que usará a programação MultiThreading para dividir u
 &emsp; &emsp; Concluido os passos acima, vamos configurar a variável de ambiente no **Passo 2.**
 
 ### 2. Verificando variável de ambiente Java:
-Para verificar se a variável de ambiente Java está configurada corretamente, execute o seguinte comando no CMD:
+Para verificar se a variável de ambiente Java está configurada corretamente, execute o seguinte comando no TERMINAL:
 
-```echo %JAVA_HOME%```
+```echo $JAVA_HOME```
 
 caso a saída seja parecida com a imagem abaixo a variável está configurada corretamente e podemos passar para o **Passo 3**:
 
-
+![image](https://user-images.githubusercontent.com/71159051/180905653-969c5ed9-8681-458e-8e8c-a5410eb180f1.png)
 
 caso a saída for parecida com:
 
-![image](https://user-images.githubusercontent.com/71159051/180892202-3d35f94f-fc35-41dc-ab72-00106a6cfc61.png)
+![image](https://user-images.githubusercontent.com/71159051/180905753-f174b47c-ef86-42ac-b851-48dfbe030dc2.png)
 
 siga para o **Passo 2.1** para configurar a variável de ambiente.
 
-caso a saída seja parecida com a imagem abaixo, a variável foi configurada corretamente e podemos avançar para o **Passo 3**: 
 
-![3](https://user-images.githubusercontent.com/71159051/180118770-35762cde-c146-4d20-974f-f7190e93d6b8.png)
+### &emsp;&emsp;2.1 Configurando a variável de Ambiente
 
+&emsp;&emsp; Crie uma cópia do arquivo ```/etc/profile```:
 
-### &emsp; &emsp; 2.1 Configurando a variável de Ambiente
+&emsp;&emsp; ```sudo cp -a /etc/profile /etc/profile.original```
 
-&emsp; &emsp; Crie uma cópia do arquivo ```/etc/profile```:
+&emsp;&emsp; Abra o arquivo com seu editor de texto:
 
-&emsp; &emsp; ```sudo cp -a /etc/profile /etc/profile.original```
+&emsp;&emsp; ```sudo gedit /etc/profile```
 
-&emsp; &emsp; Abra o arquivo com seu editor de texto:
+&emsp;&emsp; Cole o texto abaixo dentro do arquivo logo após os comentários(#):
 
-&emsp; &emsp; ```sudo gedit /etc/profile```
+```
+JAVA_HOME=/usr/lib/jvm/java-oracle/
+PATH=$JAVA_HOME/bin:$PATH export PATH JAVA_HOME
+CLASSPATH=$JAVA_HOME/lib/tools.jar
+CLASSPATH=.:$CLASSPATH
+export  JAVA_HOME  PATH  CLASSPATH
+```
+
+&emsp;&emsp; Edite o arquivo de variavel de ambiente com o seguinte comando:
+
+&emsp;&emsp; ```sudo gedit /etc/environment```
+
+&emsp;&emsp; Adicione o caminho onde o java está instalado
+
+&emsp;&emsp; ```JAVA_HOME="/usr/lib/jvm/java-oracle/bin/java"```
+
+&emsp;&emsp; Aplique as mudanças executando:
+
+&emsp;&emsp; ```source /etc/environment```
+
+&emsp;&emsp; Reinicie o computador para aplicar as alterações e volte ao **passo 2** para verificar se a instalação foi feita corretamente.
+
 
 
 
