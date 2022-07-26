@@ -5,26 +5,79 @@ Se trata de um programa que usará a programação MultiThreading para dividir u
 # Linux:
 
 ### 1. Instalação do Java
+* Para verificar se o Java está instalado usando seguinte comando no CMD:
+
+```java -version```
+
+* caso a saída seja parecida com a imagem abaixo o Java está instalado e podemos avançar para o **Passo 2**:
+
+![image](https://user-images.githubusercontent.com/71159051/181059319-679c2650-4f40-4f9e-b5eb-ddb601e4349f.png)
+
+> :floppy_disk: **caso contrário faça a instalação do Java, executando o ***Passo 1.1*** ou ***Passo 1.2***!**
+
 
 #### &emsp; &emsp; 1.1 Via .tar.gz
-&emsp; &emsp; Faça o Download do Java JDK compactado em .tar.gz, em seguida crie o diretório jvm em ```/usr/lib/```:
+&emsp; &emsp;Faça o Download do Java JDK compactado em .tar.gz, em seguida crie o diretório jvm em ```/usr/lib/```:
 
 &emsp; &emsp; ```sudo mkdir /usr/lib/jvm```
 
-&emsp; &emsp; Em seguida descompacte o JDK no diretório criado acima:
+&emsp; &emsp;Em seguida descompacte o JDK no diretório criado acima:
 
 &emsp; &emsp; ```sudo tar zxvf jdk-18_linux-x64_bin.tar.gz -C /usr/lib/jvm```
 
-&emsp; &emsp; Renomeie a pasta movida para dentro do diretório ```/usr/lib/jvm``` como "jdk". Se ao executar o comando abaixo ocorrer um erro com a
+&emsp; &emsp;  Renomeie a pasta movida para dentro do diretório ```/usr/lib/jvm``` como "jdk". Se ao executar o comando abaixo ocorrer um erro com a
 &emsp; &emsp; mensagem iniciando com _“mv: é impossível sobrescrever o não-diretório”_, pule este passo:
 
 &emsp; &emsp; ```sudo mv /usr/lib/jvm/jdk* /usr/lib/jvm/jdk```
 
-&emsp; &emsp; Crie um link simbólico para a pasta criada:
+&emsp; &emsp;  Crie um link simbólico para a pasta criada:
 
 &emsp; &emsp; ```sudo ln -s /usr/lib/jvm/jdk /usr/lib/jvm/java-oracle```
 
+&emsp; &emsp;  Concluido os passos acima, vamos configurar a variável de ambiente no **Passo 2.**
+
+#### &emsp; &emsp; &emsp; &emsp; 1.1.2 Desinstalando Java:
+&emsp; &emsp; &emsp; &emsp;  Para desinstalar o Java que foi instalado via Pacote Compactado execute o seguinte comando, para apagar a pasta de
+&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; instalação:
+
+&emsp; &emsp; &emsp; &emsp; ```sudo rm -Rf /usr/lib/jvm```
+
+
+
+#### &emsp; &emsp; 1.2 Via Gerenciador de Pacotes
+&emsp; &emsp;  Atualize o sistema:
+
+&emsp; &emsp; ```sudo apt update && sudo apt upgrade -y```
+
+&emsp; &emsp;  Em pesquise para encontrar o JDK que está disponível:
+
+&emsp; &emsp; ```apt-cache search openjdk | grep openjdk-```
+
+&emsp; &emsp;  Escolha a versão e execute o seguinte comando, substituindo a versão pela escolhida:
+
+&emsp; &emsp; ```sudo apt-get install openjdk-18-jdk -y```
+
+&emsp; &emsp;  Execute o comando a baixo para verificar se a instalação ocorreu corretamente:
+
+&emsp; &emsp; ```java --version```
+
 &emsp; &emsp; Concluido os passos acima, vamos configurar a variável de ambiente no **Passo 2.**
+
+#### &emsp; &emsp; &emsp; &emsp; 1.2.2 Desinstalando Java:
+&emsp; &emsp; &emsp; &emsp;  Para desinstalar o Java que foi instalado via Gerenciador de Pacotes execute o seguinte comando, substituindo a versão pela
+&emsp; &emsp; &emsp; &emsp; &emsp; escolhida:
+
+&emsp; &emsp; &emsp; &emsp; ```sudo apt-get autoremove openjdk-18-jre openjdk-18-jdk --purge -y```
+
+<br />
+<br />
+
+#### :mag: OBS.: É POSSÍVEL TER MÚLTIPLAS INSTALAÇÕES DO JAVA. VOCÊ PODE DEFINIR A VERSÃO PADRÃO USANDO O COMANDO:
+
+```update-alternatives --config java```
+
+<br />
+<br />
 
 ### 2. Verificando variável de ambiente Java:
 Para verificar se a variável de ambiente Java está configurada corretamente, execute o seguinte comando no TERMINAL:
@@ -89,24 +142,24 @@ em seguida navegue até a pasta ```dist/``` onde está o arquivo .jar do projeto
 
 como na imagem abaixo:
 
-![3](https://user-images.githubusercontent.com/71159051/180119781-30197cb1-1baa-4577-8e3b-ef30fd172ae0.png)
+![image](https://user-images.githubusercontent.com/71159051/181056761-818ac5e0-4e85-4480-9b16-6e9c5ad16f14.png)
 
 
 ### 4. Executando o Projeto por Linha de Comando:
-Para rodar o projeto execute o seguinte comando no CMD após ter acessado o diretório ```dist\``` como no passo anterior:
+Para rodar o projeto execute o seguinte comando no CMD após ter acessado o diretório ```dist/``` como no passo anterior:
 
 ```java -jar -Xms0m -Xmx4G Thread-SO.jar```
 
 será aberto o seguinte menu:
 
-![5](https://user-images.githubusercontent.com/71159051/180119817-7133ef1f-ed49-4132-9395-84ddfa7384c7.png)
+![image](https://user-images.githubusercontent.com/71159051/181059689-6327a7b5-ec20-4454-acbf-17edb358577c.png)
 
 para executar para casos onde a matriz ocupe mais de 4G de memória altere 4G para a quantidade máxima de memória RAM disponível no sistema.
 
 
 # Windows:
 
-### 1. Verificando a Instalação do Java
+### 1. Instalação do Java
 Para verificar se o Java está instalado usando seguinte comando no CMD:
 
 ```java -version```
